@@ -1,6 +1,7 @@
 using BasketAPI.Data;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using DiscountGrpc;
 using HealthChecks.UI.Client;
 using System.Reflection;
 
@@ -17,6 +18,7 @@ builder.Services.AddMediatR(cnf =>
     cnf.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
+
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -26,9 +28,20 @@ builder.Services.AddMarten(opts =>
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+
 builder.Services.AddStackExchangeRedisCache(cache =>
 {
     cache.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
+{
+    opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler //Only for development env, in prod there should be a certificate
+{
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
