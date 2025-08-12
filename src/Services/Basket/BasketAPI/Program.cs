@@ -4,6 +4,7 @@ using BuildingBlocks.Exceptions.Handler;
 using DiscountGrpc;
 using HealthChecks.UI.Client;
 using System.Reflection;
+using BuildingBlocks.Messaging.MassTransit;
 
 var assembly = typeof(Program).Assembly;
 
@@ -43,6 +44,9 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 {
     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
+
+// No assembly for publisher side
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

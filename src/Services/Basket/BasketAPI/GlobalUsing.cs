@@ -7,3 +7,4 @@ global using MediatR;
 global using FluentValidation;
 global using BuildingBlocks.Exceptions;
 global using Marten;
+global using BasketAPI.Dtos;

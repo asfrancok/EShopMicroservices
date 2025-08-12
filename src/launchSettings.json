@@ -5,7 +5,9 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "catalogapi": "StartDebugging",
-        "basketapi": "StartDebugging"
+        "basketapi": "StartDebugging",
+        "orderingapi": "StartDebugging",
+        "yarpgateway": "StartDebugging"
       }
     }
   }
