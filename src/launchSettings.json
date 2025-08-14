@@ -7,7 +7,8 @@
         "catalogapi": "StartDebugging",
         "basketapi": "StartDebugging",
         "orderingapi": "StartDebugging",
-        "yarpgateway": "StartDebugging"
+        "yarpgateway": "StartDebugging",
+        "shopping.web": "StartDebugging"
       }
     }
   }
